@@ -1,5 +1,5 @@
 ---
-title: "Cognitive debt: The invisible AI tax"
+title: "Cognitive debt"
 date: 2026-03-09T00:00:00.000Z
 author: "Jon George"
 description: "AI doesn't automatically create cognitive debt. It creates cognitive debt when developers skip the understanding step."
