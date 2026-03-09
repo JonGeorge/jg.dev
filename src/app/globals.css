@@ -64,6 +64,16 @@ section[id] {
   /*margin-bottom: 1.75em;*/
 }
 
+.prose > p:first-of-type::first-letter {
+  font-family: var(--font-lora), Georgia, 'Times New Roman', serif;
+  color: var(--color-accent);
+  font-size: 3.5em;
+  float: left;
+  line-height: 0.8;
+  margin-right: 0.08em;
+  margin-top: 0.1em;
+}
+
 .prose h1,
 .prose h2,
 .prose h3,
