@@ -4,9 +4,9 @@ import { HomePage } from '@/components/HomePage'
 export default function Home() {
     const featuredPosts: string[] = [
         // "the-myths-and-realities-of-open-source-software-security",
-        "from-black-box-to-open-book-using-net-logs-to-understand-your-browsers-behavior",
+        // "from-black-box-to-open-book-using-net-logs-to-understand-your-browsers-behavior",
         "are-larger-monolithic-functions-actually-better",
-        // "zero-trust-in-code",
+        "cognitive-debt",
         "the-five-dimensions-of-cognitive-work",
         "send-cyber-junk-to-your-pi-hole-2",
         "slow-cook-your-ideas"
