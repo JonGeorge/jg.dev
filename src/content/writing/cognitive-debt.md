@@ -68,11 +68,11 @@ On my team, if I use AI to generate code, I'll have one of my teammates grill me
 
 Either I understand the code well enough to defend it, or I don't. We find out right there.
 
-It's code review, which every serious team already does. The difference is the intent behind it. What I'm describing is code review taken seriously for a failure mode it wasn't originally calibrated to catch. It checks whether the author actually understands what they pushed, directly addressing cognitive debt.
+It's code review, which every serious team already does. The difference is the intent behind it. It checks whether the author actually understands what they pushed, directly addressing cognitive debt.
 
 Knowledge transfer has always been a first-class reason code review the practice exists. So I want to be clear that this isn't some new process I invented. What I'm describing is code review accounting for a failure mode it wasn't originally calibrated to catch.
 
-The author sounds confident. The reviewer finds nothing obviously wrong. The debt enters anyway. Existing review culture tends to catch shallow code. It's less equipped to catch shallow understanding of code that isn't shallow because the two used to be harder to decouple. You generally couldn't submit well-structured, well-tested code you didn't understand. Now you can.
+Without this, tgshe author sounds confident. The reviewer finds nothing obviously wrong. The debt enters anyway. Existing review culture tends to catch shallow code. It's less equipped to catch shallow understanding of code that isn't shallow because the two used to be harder to decouple. You generally couldn't submit well-structured, well-tested code you didn't understand. Now you can.
 
 So the practice is to review with a specific additional question: 
 > *Does the author actually own this, or do they just own the output?*
