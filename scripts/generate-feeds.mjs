@@ -61,8 +61,12 @@ const feed = new Feed({
 })
 
 for (const post of posts) {
+    // Strip rehype-pretty-code inline language hints (e.g. `code{:js}` → `code`)
+    // before marked parses the markdown, since marked doesn't understand them.
+    const cleanedContent = post.content.replace(/`([^`]+)\{:\w+\}`/g, '`$1`')
+
     // Convert markdown body to HTML for full-content feeds
-    const html = await marked.parse(post.content)
+    const html = await marked.parse(cleanedContent)
 
     const htmlAbsoluteSrc = html.replace(/src="\/images\//g, `src="${SITE}/images/`);
     const htmlAbsoluteSrcAndHref = htmlAbsoluteSrc.replace(/href="\//g, `href="${SITE}/`);
