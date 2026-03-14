@@ -9,7 +9,7 @@ description: "\"Many eyes\" sounds reassuring until you look at who's actually w
 category: "Security"
 ---
 
-"Given enough eyeballs, all bugs are shallow." That's Linus's Law, the idea that open source software is inherently more secure because anyone can inspect the code. It's one of the most repeated claims in software, and it contains a critical assumption that rarely gets examined: it assumes the eyeballs show up.
+Given enough eyeballs, all bugs are shallow. That's Linus's Law, the idea that open source software is inherently more secure because anyone can inspect the code. It's one of the most repeated claims in software, and it contains a critical assumption that rarely gets examined: it assumes the eyeballs show up.
 
 Most of the time, they don't.
 
