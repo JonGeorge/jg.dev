@@ -17,19 +17,20 @@ This post is a decision framework. I'll walk through every approach I've used, w
 
 Before choosing an approach, answer two questions:
 
-**Does your operation require scripting logic per record?** 
+*Does your operation require scripting logic per record?*
+
 If you're setting field A to value B across every record that matches condition C, that's a static update. 
 
 If you're computing a value based on related records, calling a script include, doing cross-table lookups, or applying conditional logic that varies per record, that's a scripted operation. 
 
 This distinction determines which tools are automatically off the table (pun intended).
 
-**How many records?** 
+*How many records do you need to process?*
 Hundreds, thousands, hundreds of thousands, millions? The approaches that work at 5,000 records will fail at 500,000. Scale changes the physics.
 
 ## The approaches, in order of complexity
 
-### Update All from list view
+#### Update All from list view
 
 Filter a list, right-click a column header, select Update All, set the new value. It works. It's fast. No scripting required.
 
@@ -43,7 +44,7 @@ Use it when: you need a quick, uniform field update on a filtered set you can se
 
 Skip it when: you need any logic beyond "set X to Y," or you're operating on more than a few thousand records.
 
-### Data Management (Update Jobs / Delete Jobs)
+#### Data Management (Update Jobs / Delete Jobs)
 
 ServiceNow's System Data Management module is a no-code tool for bulk updates and deletes. You configure conditions, specify field values, and execute. It handles batching internally, you can schedule it, and it has built-in rollback, which is actually useful.
 
@@ -57,7 +58,7 @@ Use it when: you need a bulk field update with static values and want built-in r
 
 Skip it when: your operation requires per-record scripting logic.
 
-### Background script with setLimit or chooseWindow
+#### Background script with setLimit or chooseWindow
 
 This is where most developers land first for scripted operations. Write a GlideRecord loop, use `setLimit()` or `chooseWindow()` to process a subset, run it, adjust the window, run it again recursively or manually.
 
@@ -69,7 +70,7 @@ Use it when: you have a scripted operation on a moderate dataset (under ~100K re
 
 Skip it when: the dataset is large enough that re-runs become impractical, or when you need the operation to run unattended.
 
-### Scheduled job on a recurring interval
+#### Scheduled job on a recurring interval
 
 The next step up: create a scheduled job that processes a batch of records on a fixed interval. Run every 5 minutes, process 500 records per run. Walk away.
 
@@ -83,7 +84,7 @@ Use it when: you need a recurring maintenance operation that processes records i
 
 Skip it when: you have a one-off large-scale operation and need it done in hours or days, not months.
 
-### Event-driven recursion
+#### Event-driven recursion
 
 This is the pattern I reach for when every other option has a dealbreaker: the operation requires per-record scripting, the dataset is too large for manual re-runs, and a scheduled job is too slow.
 
@@ -100,30 +101,34 @@ The pattern has three components:
 2. a script action
 3. and a one-time background script to kick off the first event
 
-### Step 1: Register the event
+#### Step 1: Register the event
 
 Navigate to **System Policy > Events > Registry** and create a new event. Give it a descriptive name, something like `custom.batch.backfill_field`. Add a short blurb about what triggers the event in the `Fired by` field. And add a description.
 
-### Step 2: Create the script action
+#### Step 2: Create the script action
 
 Navigate to **System Policy > Events > Script Actions** and create a new record. Set the **Event name** to the event you registered. Set **Order** to 1000 (low priority - you don't want this competing with critical event processing).
 
 Here's the template:
 
-```javascript
+```js
 /**
  * Event-driven recursive batch processor.
- * Processes records in batches, firing a new event after each batch
- * to reset the transaction timeout and prevent instance degradation.
+ * Processes records in batches, firing a new event after each
+ * batch to reset the transaction timeout and prevent instance
+ * degradation.
  *
- * @param {number} batchSize - Records to process per event (via event.parm1)
- * @param {number} totalProcessed - Running count of processed records (via event.parm2)
+ * @param {number} batchSize - Records to process per event 
+ * (via event.parm1)
+ *
+ * @param {number} totalProcessed - Running count of processed
+ * records (via event.parm2)
  */
 (function process(batchSize, totalProcessed) {
 
-    var EVENT_NAME = 'custom.batch.backfill_field'; // Your event name
-    var TABLE = 'cmdb_ci_server';                    // Your target table
-    var QUERY = 'u_custom_field=NULL';               // Query that matches UNPROCESSED records
+    var EVENT_NAME = 'custom.batch.backfill_field'; 
+    var TABLE = 'cmdb_ci_server';
+    var QUERY = 'u_custom_field=NULL';
 
     batchSize = parseInt(batchSize, 10) || 5000;
     totalProcessed = parseInt(totalProcessed, 10) || 0;
@@ -134,7 +139,11 @@ Here's the template:
     gr.query();
 
     if (!gr.hasNext()) {
-        gs.info('EDR Complete: ' + totalProcessed + ' total records processed.', 'BatchProcessor');
+        gs.info(
+	        'EDR Complete: ' + totalProcessed + 
+	        ' total records processed.',
+	        'BatchProcessor'
+	    );
         return; // No more records. Stop the recursion.
     }
 
@@ -148,11 +157,14 @@ Here's the template:
         // -------------------------------------------
         
         batchCount++;
-        
     }
 
     totalProcessed += batchCount;
-    gs.info('EDR Progress: ' + totalProcessed + ' records processed. Firing next batch.', 'BatchProcessor');
+    gs.info(
+	    'EDR Progress: ' + totalProcessed +
+	    ' records processed. Firing next batch.', 
+	    'BatchProcessor'
+    );
 
     gs.eventQueue(EVENT_NAME, gr, batchSize, totalProcessed);
 
@@ -169,12 +181,17 @@ Also note that `setWorkflow(false)` means that the `Updated` date/time and `Upda
 
 **Log progress consistently.** When this runs across a million records, you need to know where it is. The `gs.info` calls with a consistent source tag (`BatchProcessor`) let you filter the system log and watch progress in real time.
 
-### Step 3: Kick it off
+#### Step 3: Kick it off
 
 Run this once in Background Script or Fix Script to fire the first event:
 
 ```javascript
-gs.eventQueue('custom.batch.backfill_field', new GlideRecord('incident'), 5000, 0);
+gs.eventQueue(
+	'custom.batch.backfill_field', 
+	new GlideRecord('incident'), 
+	5000, 
+	0
+);
 ```
 
 The first parameter is the batch size (5000 records per event), the second is the starting count (0). The script action handles everything from here.
@@ -229,13 +246,25 @@ Here's a refinement I use that goes beyond the base pattern. Within a single scr
     var moreRecords = processSubBatch();
 
     totalProcessed += batchCount;
-    gs.info('EDR Progress: ' + totalProcessed + ' records processed (' + batchCount + ' this batch).');
+    gs.info(
+	    'EDR Progress: ' + 
+	    totalProcessed + ' records processed (' + 
+	    batchCount + ' this batch).'
+    );
 
     if (moreRecords) {
-        gs.eventQueue(EVENT_NAME, new GlideRecord(TABLE), batchSize, totalProcessed);
-    } 
+        gs.eventQueue(
+	        EVENT_NAME, 
+	        new GlideRecord(TABLE), 
+	        batchSize, 
+	        totalProcessed
+	    );
+    }
     else {
-        gs.info('EDR Complete: ' + totalProcessed + ' total records processed.');
+        gs.info(
+	        'EDR Complete: ' + 
+	        totalProcessed + ' total records processed.'
+        );
     }
 
 })(event.parm1, event.parm2);
@@ -254,25 +283,25 @@ I use the pattern anyway because the throughput improvement has been consistent 
 
 The mechanics of the pattern are straightforward. The operational details are where things get real.
 
-### Monitoring progress
+#### Monitoring progress
 
 Filter the system log by your source tag and sort by timestamp. You'll see a running count of processed records with timing between entries. If the gap between log entries suddenly increases, the instance is under load and the event queue is backing up. If entries stop appearing entirely, something went wrong. Check the most recent log entry for error context.
 
 For long-running operations, I'll sometimes add a GlideAggregate call at the start of each batch to count remaining records matching the query. This gives you an estimated completion percentage, not just a running total.
 
-### Handling failures
+#### Handling failures
 
 The beauty of the query-based approach is that it's inherently resumable. If a batch fails partway through, the records that were already processed no longer match the query. You just fire the event again and it picks up from where it stopped.
 
 Design your query so that processing a record removes it from the result set. This is the single most important design decision in the pattern.
 
-### Event queue considerations
+#### Event queue considerations
 
 Each batch fires one event. If you're processing a million records at 50,000 per batch, that's 20 events over the course of the operation. This is fine for the default event queue.
 
 But if your batch size is small (say, 50 records because each operation is expensive) and your dataset is large, you'll generate thousands of events. At that scale, you can clog the default event queue and delay processing of other events like notifications, integrations, anything that runs through the same queue. ServiceNow provides a mechanism to create dedicated event queues for exactly this scenario. Move your batch processing event to its own queue so it doesn't compete with production event processing.
 
-### Business rules and side effects
+#### Business rules and side effects
 
 I mentioned `setWorkflow(false)` earlier. Here's when to think carefully about it.
 
@@ -282,7 +311,7 @@ If you're doing a reclassification or status change where other systems, notific
 
 There's no universal answer. Know your table's automation landscape before you decide.
 
-### Testing before you commit
+#### Testing before you commit
 
 Never run a batch operation at scale without validating the logic on a small subset first.
 
