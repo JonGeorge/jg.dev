@@ -132,6 +132,11 @@ section[id] {
   font-style: var(--shiki-dark-font-style) !important;
 }
 
+.prose :where(code):not(:where(pre *))::before,
+.prose :where(code):not(:where(pre *))::after {
+  content: none;
+}
+
 .prose :where(code):not(:where(pre *)) {
   background-color: color-mix(in srgb, var(--color-text-muted) 10%, transparent);
   padding: 0.15em 0.35em;
