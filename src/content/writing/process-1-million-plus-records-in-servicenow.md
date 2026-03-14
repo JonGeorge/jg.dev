@@ -5,9 +5,7 @@ author: Jon George
 description: A decision framework for large-scale data operations in ServiceNow, and the event-driven recursion pattern I use when nothing else works.
 category: Engineering
 ---
-Every ServiceNow developer eventually needs to run a scripted operation across hundreds of thousands of records. Maybe you're backfilling a computed field, reclassifying CIs, reconciling data between tables, or cleaning up records that should have been purged years ago. You write a GlideRecord loop, paste it into Background Scripts, and hit Run.
-
-Then one of three things happens. The script times out. The instance slows to a crawl. Or both.
+Every ServiceNow developer eventually needs to run a scripted operation across hundreds of thousands of records. Maybe you're backfilling a computed field, reclassifying CIs, reconciling data between tables, or cleaning up records that should have been purged years ago. You write a GlideRecord loop, paste it into Background Scripts, and hit Run. Then one of three things happens. The script times out. The instance slows to a crawl. Or both.
 
 This is a real problem, but the answer isn't obvious because the right approach depends on what you're actually doing to each record. A simple field update and a complex reclassification are fundamentally different operations, and the tooling that handles one will choke on the other.
 
@@ -17,28 +15,22 @@ This post is a decision framework. I'll walk through every approach I've used, w
 
 Before choosing an approach, answer two questions:
 
-*Does your operation require scripting logic per record?*
-
-If you're setting field A to value B across every record that matches condition C, that's a static update. 
-
-If you're computing a value based on related records, calling a script include, doing cross-table lookups, or applying conditional logic that varies per record, that's a scripted operation. 
-
-This distinction determines which tools are automatically off the table (pun intended).
+*Does your operation require scripting logic per record?* If you're setting field A to value B across every record that matches condition C, that's a static update. If you're computing a value based on related records, calling a script include, doing cross-table lookups, or applying conditional logic that varies per record, that's a scripted operation. 
 
 *How many records do you need to process?*
 Hundreds, thousands, hundreds of thousands, millions? The approaches that work at 5,000 records will fail at 500,000. Scale changes the physics.
+
+This distinction determines which tools are automatically off the table (pun intended).
 
 ## The approaches, in order of complexity
 
 #### Update All from list view
 
-Filter a list, right-click a column header, select Update All, set the new value. It works. It's fast. No scripting required.
-
-This is the right choice for small to moderate datasets — a few thousand records — where you're setting fields to a uniform value.
+Filter a list, right-click a column header, select Update All, set the new value. It works. It's fast. No scripting required. This is the right choice for small to moderate datasets — a few thousand records — where you're setting fields to a uniform value.
 
 If you're in a pinch, you can use update all on a larger number of records, just be prepared for your session to be locked while you wait for the operation to complete. You'll also need to re-run the operation on remaining records after it times out. 
 
-Update All breaks down the moment you need per-record logic, and it doesn't scale well past a few thousand records because the UI transaction will time out.
+Update All breaks down the moment you need per-record logic, and it doesn't scale well past a few thousand records because the UI transaction will time out. If your update involves removing field values, you can set string values to `NULL{:js}`, but date fields can't be cleared.
 
 Use it when: you need a quick, uniform field update on a filtered set you can see in a list.
 
@@ -60,7 +52,7 @@ Skip it when: your operation requires per-record scripting logic.
 
 #### Background script with setLimit or chooseWindow
 
-This is where most developers land first for scripted operations. Write a GlideRecord loop, use `setLimit()` or `chooseWindow()` to process a subset, run it, adjust the window, run it again recursively or manually.
+This is where most developers land first for scripted operations. Write a GlideRecord loop, use `setLimit(){:js}` or `chooseWindow(){:js}` to process a subset, run it, adjust the window, run it again recursively or manually.
 
 It works at moderate scale — tens of thousands of records. But the entire background script runs in a single transaction, and the transaction timeout clock starts when you hit Run. Calling functions recursively within the script doesn't reset the timer. The default background script quota is 4 hours, and transaction quota rules may enforce tighter limits depending on your instance configuration.
 
@@ -103,13 +95,13 @@ The pattern has three components:
 
 #### Step 1: Register the event
 
-Navigate to **System Policy > Events > Registry** and create a new event. Give it a descriptive name, something like `custom.batch.backfill_field`. Add a short blurb about what triggers the event in the `Fired by` field. And add a description.
+Navigate to **System Policy > Events > Registry** and create a new event. Give it a descriptive name, something like `custom.batch.backfill_field{:plain}`. Add a short blurb about what triggers the event in the `Fired by` field. And add a description.
 
 #### Step 2: Create the script action
 
 Navigate to **System Policy > Events > Script Actions** and create a new record. Set the **Event name** to the event you registered. Set **Order** to 1000 (low priority - you don't want this competing with critical event processing).
 
-Here's the template:
+Here's the what the Script Action looks like:
 
 ```js
 /**
@@ -175,11 +167,11 @@ A few things to note about this template:
 
 **The query must exclude already processed records.** This is what makes the pattern resumable. If your operation sets a field from NULL to a computed value, query for records where that field is still NULL. Each batch processes records that match the query, transforms them so they no longer match, and the next batch picks up where this one left off. If the process fails mid-run, you restart it and it automatically skips records that were already processed.
 
-**`setWorkflow(false)` is your friend, when appropriate.** Every `gr.update()` fires every business rule, workflow, and/or notification on that table. On a table with heavy automation, this can be the difference between processing 5000 records per batch and 50. But only suppress workflows if your operation genuinely doesn't need the side effects. If you're reclassifying CIs and downstream processes need to react to the class change, leave workflows on and reduce your batch size.
+**`setWorkflow(false){:js}` is your friend, when appropriate.** Every `gr.update(){:js}` fires every business rule, workflow, and/or notification on that table. On a table with heavy automation, this can be the difference between processing 5000 records per batch and 50. But only suppress workflows if your operation genuinely doesn't need the side effects. If you're reclassifying CIs and downstream processes need to react to the class change, leave workflows on and reduce your batch size.
 
-Also note that `setWorkflow(false)` means that the `Updated` date/time and `Updated by` fields will not be updated.
+Also note that `setWorkflow(false){:js}` means that the `Updated` date/time and `Updated by` fields will not be updated.
 
-**Log progress consistently.** When this runs across a million records, you need to know where it is. The `gs.info` calls with a consistent source tag (`BatchProcessor`) let you filter the system log and watch progress in real time.
+**Log progress consistently.** When this runs across a million records, you need to know where it is. The `gs.info{:js}` calls with a consistent source tag (`BatchProcessor{:js}`) let you filter the system log and watch progress in real time.
 
 #### Step 3: Kick it off
 
@@ -270,8 +262,8 @@ Here's a refinement I use that goes beyond the base pattern. Within a single scr
 })(event.parm1, event.parm2);
 ```
 
-The outer `batchSize` controls how many records are processed per event (per transaction). 
-The inner `SUB_BATCH_SIZE` controls how many records are queried and processed per recursive function call within that transaction.
+The outer `batchSize{:js}` controls how many records are processed per event (per transaction). 
+The inner `SUB_BATCH_SIZE{:js}` controls how many records are queried and processed per recursive function call within that transaction.
 
 I want to be transparent about why I use this structure. In my experience, I've consistently observed that using recursive sub-batch calls within a single script action lets me process significantly more records per event, roughly 30,000-50,000 per event compared to 10,000-15,000 with a flat loop. But I haven't been able to isolate exactly why.
 
@@ -303,9 +295,9 @@ But if your batch size is small (say, 50 records because each operation is expen
 
 #### Business rules and side effects
 
-I mentioned `setWorkflow(false)` earlier. Here's when to think carefully about it.
+I mentioned `setWorkflow(false){:js}` earlier. Here's when to think carefully about it.
 
-If you're doing a data cleanup or backfill where no downstream systems need to react then use `setWorkflow(false)`. The performance difference is dramatic. On a table with 10+ business rules, turning off workflows can increase your throughput by an order of magnitude.
+If you're doing a data cleanup or backfill where no downstream systems need to react then use `setWorkflow(false){:js}`. The performance difference is dramatic. On a table with 10+ business rules, turning off workflows can increase your throughput by an order of magnitude.
 
 If you're doing a reclassification or status change where other systems, notifications, or audit trails need to reflect the change, then leave workflows on. Reduce your batch size to compensate, and accept that the operation will take longer. Correctness beats speed.
 
@@ -327,7 +319,7 @@ If this post gives you one thing, make it this:
 
 **Static field update on any number of records →** Data Management Update Jobs. No scripting needed, rollback included.
 
-**Scripted operation on under ~100K records →** Background script with `setLimit`. Manual, but manageable.
+**Scripted operation on under ~100K records →** Background script with `setLimit(){:js}`. Manual, but manageable.
 
 **Scripted operation on 100K+ records →** Event-driven recursion. Set it up once, kick it off, monitor progress.
 
