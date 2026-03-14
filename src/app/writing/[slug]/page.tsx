@@ -112,6 +112,7 @@ export default async function PostPage({
       </header>
 
       <div className="prose">
+        {/*Code themes at: https://shiki.style/themes#themes*/}
         <MDXRemote
           source={content}
           options={{
@@ -119,7 +120,12 @@ export default async function PostPage({
               remarkPlugins: [remarkGfm],
               rehypePlugins: [
                 rehypeSlug,
-                [rehypePrettyCode, { theme: 'github-dark-dimmed' }],
+                [rehypePrettyCode, {
+                  theme: {
+                    light: 'github-light-high-contrast',
+                    dark: 'min-dark'
+                  }
+                }],
               ],
             },
           }}
