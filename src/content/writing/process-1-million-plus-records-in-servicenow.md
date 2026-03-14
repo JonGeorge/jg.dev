@@ -119,7 +119,7 @@ Here's the what the Script Action looks like:
 (function process(batchSize, totalProcessed) {
 
     var EVENT_NAME = 'custom.batch.backfill_field'; 
-    var TABLE = 'cmdb_ci_server';
+    var TABLE = 'incident';
     var QUERY = 'u_custom_field=NULL';
 
     batchSize = parseInt(batchSize, 10) || 5000;
@@ -198,7 +198,7 @@ Here's a refinement I use that goes beyond the base pattern. Within a single scr
 (function process(batchSize, totalProcessed) {
 
     var EVENT_NAME = 'custom.batch.backfill_field';
-    var TABLE = 'cmdb_ci_server';
+    var TABLE = 'incident';
     var QUERY = 'u_custom_field=NULL';
     var SUB_BATCH_SIZE = 1000;
 
