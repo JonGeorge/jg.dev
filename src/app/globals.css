@@ -50,8 +50,8 @@ section[id] {
   --tw-prose-quote-borders: var(--color-accent);
   --tw-prose-captions: var(--color-text-muted);
   --tw-prose-code: var(--color-text-primary);
-  --tw-prose-pre-code: #e8e4df;
-  --tw-prose-pre-bg: #1a1a18;
+  --tw-prose-pre-code: inherit;
+  --tw-prose-pre-bg: transparent;
   --tw-prose-th-borders: var(--color-border);
   --tw-prose-td-borders: var(--color-border);
 
@@ -110,6 +110,26 @@ section[id] {
 .prose pre {
   border: 1px solid var(--color-border);
   border-radius: 0.5rem;
+}
+
+/* rehype-pretty-code dual theme: use light theme by default */
+[data-rehype-pretty-code-figure] pre {
+  background-color: var(--shiki-light-bg) !important;
+}
+
+[data-rehype-pretty-code-figure] code span {
+  color: var(--shiki-light) !important;
+  font-style: var(--shiki-light-font-style) !important;
+}
+
+/* Switch to dark theme when .dark is active */
+.dark [data-rehype-pretty-code-figure] pre {
+  background-color: var(--shiki-dark-bg) !important;
+}
+
+.dark [data-rehype-pretty-code-figure] code span {
+  color: var(--shiki-dark) !important;
+  font-style: var(--shiki-dark-font-style) !important;
 }
 
 .prose :where(code):not(:where(pre *)) {
