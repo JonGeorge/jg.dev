@@ -37,7 +37,16 @@ export function LeftColumn({ activeSection, photo }: LeftColumnProps) {
         </h1>
 
         <p className="font-sans text-center md:text-left text-lg text-(--color-text-muted) mb-8 leading-relaxed">
-          Technical leader. Building{' '}
+          Engineering leader &amp; software architect. Currently building{' '}
+          <a
+            href="https://explodex.ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-(--color-accent) hover:text-(--color-accent-hover) transition-colors"
+          >
+            Explodex
+          </a>
+          {' '}(AI ordnance identification) and{' '}
           <a
             href="https://softwaredb.com"
             target="_blank"

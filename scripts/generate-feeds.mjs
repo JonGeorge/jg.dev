@@ -44,7 +44,7 @@ const latestDate = posts[0]?.date || new Date()
 
 const feed = new Feed({
     title: 'Jon George',
-    description: 'Technical leader and product builder. Building SoftwareDB.',
+    description: 'Engineering leader & software architect. Currently building Explodex (AI ordnance identification) and SoftwareDB.',
     id: SITE,
     link: SITE,
     language: 'en',

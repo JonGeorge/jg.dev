@@ -1,6 +1,6 @@
 # jg.dev — Jon George
 
-> Personal site of Jon George, a technical leader and systems architect building SoftwareDB. Jon architects government-scale data systems and builds consumer software products.
+> Personal site of Jon George, an engineering leader and software architect. Currently building Explodex (AI ordnance identification) and SoftwareDB.
 
 Jon George is a technical manager specializing in large-scale system architecture, data pipelines, and enterprise software in the U.S. government space. He is the founder of SoftwareDB, a platform for tracking your software stack and discovering what tools others are using.
 

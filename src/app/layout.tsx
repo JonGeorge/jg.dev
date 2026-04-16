@@ -34,14 +34,14 @@ export const metadata: Metadata = {
 
     title: "Jon George",
 
-    description: "Technical leader and product builder. Building SoftwareDB.",
+    description: "Engineering leader & software architect. Currently building Explodex (AI ordnance identification) and SoftwareDB.",
 
     openGraph: {
         title: 'Jon George',
-        description: 'Technical leader and product builder. Building SoftwareDB.',
+        description: 'Engineering leader & software architect. Currently building Explodex (AI ordnance identification) and SoftwareDB.',
         url: 'https://jg.dev',
         siteName: 'jg.dev',
-        images: [{url: '/1200x630.png', width: 1200, height: 630, alt:'Jon George — Technical leader and product builder. Building SoftwareDB.'}],
+        images: [{url: '/1200x630.png', width: 1200, height: 630, alt:'Jon George — Engineering leader & software architect. Currently building Explodex (AI ordnance identification) and SoftwareDB.'}],
         locale: 'en_US',
         type: 'website',
     },
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     twitter: {
         card: 'summary_large_image',
         title: 'Jon George',
-        description: 'Technical leader. Building SoftwareDB.',
+        description: 'Engineering leader & software architect. Currently building Explodex (AI ordnance identification) and SoftwareDB.',
         creator: '@jongeorgedev',
         images: ["/1200x630.png"],
         site: '@jongeorgedev',
