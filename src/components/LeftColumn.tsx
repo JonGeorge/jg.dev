@@ -46,7 +46,7 @@ export function LeftColumn({ activeSection, photo }: LeftColumnProps) {
           >
             Explodex
           </a>
-          {' '}(AI ordnance identification) and{' '}
+          {' '}– AI ordnance identification — and{' '}
           <a
             href="https://softwaredb.com"
             target="_blank"
