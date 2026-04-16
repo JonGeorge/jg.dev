@@ -123,15 +123,7 @@ export function HomePage({ recentPosts }: { recentPosts: RecentPost[] }) {
 
                     {/* Projects */}
                     <Section id="projects" title="Projects">
-                        <div className="grid grid-cols-1 md:grid-cols-1 gap-8">
-                            <ProjectCard
-                                title="SoftwareDB"
-                                description="Track your software stack. Rate your tools. See what others are switching to."
-                                href="https://softwaredb.com"
-                                image={softwareDBScreenshot}
-                                tags={['Next.js', 'TypeScript', 'PostgreSQL']}
-                                featured
-                            />
+              <div className="grid grid-cols-1 md:grid-cols-1 gap-8">
                             <ProjectCard
                                 title="Explodex"
                                 description="AI-powered ordnance detection and identification. Computer vision that helps keep people safe."
@@ -140,6 +132,16 @@ export function HomePage({ recentPosts }: { recentPosts: RecentPost[] }) {
                                 tags={['AI', 'Computer Vision']}
                                 featured
                             />
+
+                            <ProjectCard
+                                title="SoftwareDB"
+                                description="Track your software stack. Rate your tools. See what others are switching to."
+                                href="https://softwaredb.com"
+                                image={softwareDBScreenshot}
+                                tags={['Next.js', 'TypeScript', 'PostgreSQL']}
+                                featured
+                            />
+
                             <ProjectCard
                                 title="Save A Spotify Playlist"
                                 description="Export and backup your Spotify playlists before they disappear. Because Spotify won't do it for you."
