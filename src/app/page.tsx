@@ -10,7 +10,8 @@ export default function Home() {
         "cognitive-debt",
         "the-five-dimensions-of-cognitive-work",
         // "send-cyber-junk-to-your-pi-hole-2",
-        "slow-cook-your-ideas"
+      "slow-cook-your-ideas",
+        "zero-trust-in-code"
     ];
 
     const recentPosts = getAllPosts()
