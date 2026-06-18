@@ -6,12 +6,13 @@ export default function Home() {
         // "the-myths-and-realities-of-open-source-software-security",
         // "from-black-box-to-open-book-using-net-logs-to-understand-your-browsers-behavior",
         "process-1-million-plus-records-in-servicenow",
-        "are-larger-monolithic-functions-actually-better",
-        "cognitive-debt",
+        // "are-larger-monolithic-functions-actually-better",
+        // "cognitive-debt",
         "the-five-dimensions-of-cognitive-work",
         // "send-cyber-junk-to-your-pi-hole-2",
       "slow-cook-your-ideas",
-        "zero-trust-in-code"
+      "zero-trust-in-code",
+      "becoming-an-architect"
     ];
 
     const recentPosts = getAllPosts()
