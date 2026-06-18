@@ -47,7 +47,7 @@ export function HomePage({ recentPosts }: { recentPosts: RecentPost[] }) {
                     {/* Now */}
                     <Section id="updates" title="Updates" first>
                         <div className="text-[var(--color-text-muted)] text-lg leading-relaxed space-y-4">
-                            <p>
+                            {/*<p>
                                 I&apos;m currently building out the database for{" "}
                                 <a href={"https://softwaredb.com/"}
                                    target="_blank" rel="noopener noreferrer"
@@ -60,9 +60,9 @@ export function HomePage({ recentPosts }: { recentPosts: RecentPost[] }) {
                                 means researching and organizing every modern software tool, normalizing naming across
                                 vendors, and figuring out the right level of granularity (do Slack and Discord belong in
                                 the same category, or not?).
-                            </p>
+                            </p>*/}
                             <p>
-                                Also, I&apos;m growing the training dataset for{" "}
+                                I&apos;m growing the training dataset for{" "}
                                 <a href={"https://explodex.ai/"}
                                    target="_blank" rel="noopener noreferrer"
                                    className="text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] transition-colors underline underline-offset-4 decoration-[var(--color-accent)]/30"
