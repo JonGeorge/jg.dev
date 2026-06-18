@@ -129,7 +129,7 @@ export function HomePage({ recentPosts }: { recentPosts: RecentPost[] }) {
                                 description="AI-powered ordnance detection and identification. Computer vision that helps keep people safe."
                                 href="https://explodex.ai"
                                 image={explodexScreenshot}
-                                tags={['AI', 'Computer Vision']}
+                                tags={['AI', 'Computer Vision', 'Android']}
                                 featured
                             />
 
