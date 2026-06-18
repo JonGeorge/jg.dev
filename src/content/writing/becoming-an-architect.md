@@ -6,7 +6,7 @@ description: "A vow to clean up bad code turned into the real job of an architec
 category: "Engineering"
 ---
 
-My career as an architect started as a way to improve the developer experience. I was a developer myself, and time after time I inherited utter trash from the people who came before me. And distastefully, I was expected to keep the cycle going, piling smelly code on top of smelly code. So early on I made a quiet vow: I'd turn trash into gold to the best of my ability.
+My career as an architect started as a way to improve the developer experience. I was a developer myself, and time after time I inherited utter trash from the people who came before me. Distastefully, I was expected to keep the cycle going, piling smelly code on top of smelly code. So early on I made a quiet vow: I'd turn trash into gold to the best of my ability.
 
 I didn't realize what that vow would cost me, nor the opportunities it'd open up. Trying to keep that promise meant I couldn't think about code in isolation. I had to think about systems, design, user experience, the business, and the people doing the work, all at once, all the time. Caring about the next developer turned out to be a gateway drug to caring about everything.
 
@@ -45,7 +45,7 @@ I didn't build the original. Another team stood it up, and I inherited it barely
 
 Business people mostly don't care about code formatting or structure, and honestly they shouldn't have to. End users don't care either, as long as it works. For years that infuriated me. These days I think the business is usually making a fair call: customers pay for what the software does, not for how clean it is underneath, and shipping late to ship pretty is its own kind of failure.
 
-What changed for me was thinking about it as debt. Cutting a corner to ship faster is a loan, and sometimes a loan is exactly the right move. The trouble comes when you borrow blind: no sense of the interest rate, no plan to ever pay it down. That's how teams quietly go bankrupt, and it's where I think an architect earns the title. The job is to say the cost out loud, get it on the books, and decide which corners we're allowed to cut and which ones will bury us.
+What changed for me was thinking about it as debt. Cutting a corner to ship faster is a loan, and sometimes a loan is exactly the right move. The trouble comes when you borrow blind: no sense of the interest rate, no plan to ever pay it down. That's how teams go bankrupt, and it's where I think an architect earns the title. The job is to say the cost out loud, get it on the books, and decide which corners we're allowed to cut and which ones will bury us.
 
 I put the care where reversal is expensive (the boundaries, the data, the contracts other things lean on), and I let the disposable stuff stay rough. Some trash is load-bearing. Most of it isn't, and learning to tell the difference is most of the job.
 
