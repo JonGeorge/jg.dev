@@ -95,19 +95,18 @@ export function HomePage({ recentPosts }: { recentPosts: RecentPost[] }) {
                                 The balance has shifted toward system design, technical governance, and making sure my
                                 people have what they need, but I never stopped building.
                             </p>
-                            <p>
+                            {/*<p>
                                 Outside of work, I&apos;m making SoftwareDB because I&apos;m genuinely obsessed with
                                 software tools. Text editors, terminal emulators, browsers, IDEs, I care about this
                                 stuff and there&apos;s no good place to see what people are running
                                 and what they&apos;re switching to. The SoftwareDB waitlist is open and I&apos;m deep in
                                 the MVP.
-                            </p>
+                            </p>*/}
                             <p>
-                                I&apos;m also working on Explodex, AI software that detects and identifies explosives
+                                Outside of work, I&apos;m working on Explodex, AI software that detects and identifies explosives
                                 in photos and video. We&apos;ve built a full data pipeline with provenance tracking that
                                 feeds into our training data, and the mission is simple: significantly reduce cognitive
-                                load
-                                for the people who need to defuse bombs when it matters most.
+                                load for the people who need to defuse bombs when it matters most.
                             </p>
                             <p>
                                 I&apos;m based in Maryland. When I&apos;m not at a screen I&apos;m racing cyclocross,
