@@ -16,15 +16,13 @@ I didn't take the traditional route. Before I ever shipped production code, I wo
 
 As a fresh-eyed twenty-something, what kept catching my attention was the disconnect: between technical and non-technical people, and between management and the people actually doing the work. I could speak both languages, and I was surrounded by only a handful of others who could. That felt like something. "Technical Liaison" eventually became my official title, but really it was just the place I naturally landed everywhere I worked. This is the backdrop for my software career.
 
-## My manager laughed at me
+## What I thought the job was
 
 In a one-on-one with my manager back in my IT days, I told them my goal was to become a Solutions Architect.
 
 They burst out laughing. Head thrown back, eyes squished, knee slap. Real laughter. I don't know to this day what was so funny. I don't remember much of what he said afterward. What I do remember is being the youngest person at the company, the only one without a degree, one of a few who got there via a non-traditional path, and feeling that laugh land squarely on all of it.
 
-The offense turned into fuel. Something lit up in me, if only to prove I could do the job and do it well. When he asked, "Why Solutions Architect?", I told him I wanted to translate non-technical needs into technical solutions. Which, I figured, was already what I did, right?
-
-Turns out my picture of the job was narrow and a little naive.
+When he asked, "Why Solutions Architect?", I told him I wanted to translate non-technical needs into technical solutions, which was already what I did, right? Looking back, I get the laugh. I was describing a sliver of the job and calling it the whole thing. That answer was where my small idea of the job started, and it took me years to see how much it I'd left out.
 
 ## What an architect actually does
 
