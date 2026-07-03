@@ -1,9 +1,11 @@
 'use client'
 
 import { useTheme } from 'next-themes'
-import { useEffect, useState } from 'react'
+import { useSyncExternalStore } from 'react'
 import { motion } from 'framer-motion'
 import { SVGComponentProps } from '@/types'
+
+const emptySubscribe = () => () => {}
 
 function SunIcon(props: SVGComponentProps) {
   return (
@@ -23,11 +25,8 @@ function MoonIcon(props: SVGComponentProps) {
 
 export function ThemeToggle({ className }: { className?: string }) {
   const { resolvedTheme, setTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  // Theme is unknown until hydration; render a placeholder on the server pass
+  const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false)
 
   if (!mounted) {
     return <div className="h-5 w-5" />

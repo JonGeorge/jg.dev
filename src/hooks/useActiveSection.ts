@@ -39,7 +39,8 @@ export function useActiveSection(sectionIds: SectionId[]): SectionId {
     // Update on scroll with passive listener for performance
     window.addEventListener('scroll', updateActiveSection, { passive: true })
 
-    // Run once on mount to set initial state
+    // Initial state depends on scroll position, which is only readable after mount
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     updateActiveSection()
 
     return () => window.removeEventListener('scroll', updateActiveSection)
