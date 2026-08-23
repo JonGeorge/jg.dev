@@ -61,4 +61,4 @@ The last mile was clippy. I ran it expecting a pat on the head and got a lecture
 
 Would I recommend Rust for a CLI side project? Yes, with a caveat. The value isn't speed of delivery. I could have built this faster in three other languages. The value is that the language refuses to let structural questions stay vague. Every `Option{:rust}`, every borrow, every trait bound is a small decision about how the system handles absence, ownership, and capability. Those decisions accumulate into an architecture whether you're paying attention or not.
 
-Six months ago this was a learn-Rust project with a spec full of things that didn't survive. Today it's a 1.0.0 on crates.io. The residues are in git, the matrix catches coupling I'd have missed by eye, and the empirical test gives me a number that tells me when to stop doing architecture.
+Three months ago this was a learn-Rust project with a spec full of things that didn't survive. Today it's a 1.0.0 on crates.io. The residues are in git, the matrix catches coupling I'd have missed by eye, and the empirical test gives me a number that tells me when to stop doing architecture.
