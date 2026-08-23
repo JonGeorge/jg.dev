@@ -1,5 +1,5 @@
 ---
-title: "A Residuality Theory CLI built with Rust"
+title: "A CLI for Residuality Theory built with Rust"
 date: 2026-08-23T12:00:00.000Z
 author: "Jon George"
 description: "A Spreadsheet, a Borrow Checker, and Me: Shipping My First Rust Crate"
