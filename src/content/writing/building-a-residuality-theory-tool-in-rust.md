@@ -14,7 +14,7 @@ So I built one. [`residuality`](https://crates.io/crates/residuality) is a CLI t
 
 ## The spec for this project was my naive architecture
 
-The ironic part about this whole this is that the project became a demonstration of the theory it implements.
+The ironic part about this whole thing is that the project became a demonstration of the theory it implements.
 
 Before writing any code, I wrote a spec that allowed a user to actually define their architure using YAML file. I was proud of it. It felt thorough. It felt *responsible*. A `project.yaml` for flows and the naive architecture, a `triggers` command, `anyhow` for errors, `dialoguer` for interactive prompts. 
 
