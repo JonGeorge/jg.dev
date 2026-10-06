@@ -144,3 +144,23 @@ section[id] {
   font-size: 0.875em;
   font-weight: 400;
 }
+
+/* Click-to-enlarge image wrapper in blog posts */
+.prose .zoomable-image {
+  display: block;
+  width: 100%;
+  padding: 0;
+  margin: 2em 0;
+  border: 0;
+  background: none;
+  border-radius: 0.5rem;
+}
+
+.prose .zoomable-image:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}
+
+.prose .zoomable-image img {
+  margin: 0;
+}

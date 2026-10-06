@@ -6,6 +6,7 @@ import remarkGfm from 'remark-gfm'
 import rehypeSlug from 'rehype-slug'
 import rehypePrettyCode from 'rehype-pretty-code'
 import { getPostBySlug, getPostSlugs, getAdjacentPosts } from '@/lib/writing'
+import { ZoomableImage } from '@/components/ZoomableImage'
 
 export function generateStaticParams() {
   return getPostSlugs().map((slug) => ({ slug }))
@@ -115,6 +116,7 @@ export default async function PostPage({
         {/*Code themes at: https://shiki.style/themes#themes*/}
         <MDXRemote
           source={content}
+          components={{ img: ZoomableImage }}
           options={{
             mdxOptions: {
               remarkPlugins: [remarkGfm],
