@@ -7,7 +7,8 @@ export default function Home() {
       "the-five-dimensions-of-cognitive-work",
       "slow-cook-your-ideas",
       "zero-trust-in-code",
-      "building-a-residuality-theory-tool-in-rust"
+      "building-a-residuality-theory-tool-in-rust",
+      "my-first-morse-code-transmission"
     ];
 
     const recentPosts = getAllPosts()
